@@ -12,6 +12,7 @@ create-project:
 	@make laravel-install
 install-recommend-packages:
 	docker-compose exec api composer require doctrine/dbal
+	docker-compose exec api composer require laravel/jetstream   
 	docker-compose exec api composer require --dev barryvdh/laravel-ide-helper
 	docker-compose exec api composer require --dev beyondcode/laravel-dump-server
 	docker-compose exec api composer require --dev barryvdh/laravel-debugbar
