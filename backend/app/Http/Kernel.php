@@ -40,6 +40,11 @@ class Kernel extends HttpKernel
         ],
 
         'api' => [
+            \Fruitcake\Cors\HandleCors::class, // 追記
+            \App\Http\Middleware\EncryptCookies::class, // 追記
+            \Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse::class, // 追記
+            \Illuminate\Session\Middleware\StartSession::class, // 追記
+            \Illuminate\View\Middleware\ShareErrorsFromSession::class, // 追記
             'throttle:api',
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
         ],
