@@ -2,7 +2,7 @@
 
 use App\Http\Controllers\Api\Admin\Auth\LoginController;
 use Illuminate\Http\Request;
-use Illuminate\Facades\Auth;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\Admin\UserController;
 
@@ -20,19 +20,20 @@ use App\Http\Controllers\Api\Admin\UserController;
 // 管理画面の機能として実装するためPrefixにadminをつける
 Route::prefix('admin')->group(function() {
     // 認証処理
-    Route::prefix('ayth')->group(function () {
-        Route::post(('/login', [LoginController::class, 'login']);
+    Route::prefix('auth')->group(function () {
+        Route::post('/login', [LoginController::class, 'login']);
+    });
+
+    Route::middleware('auth:api')->group(function () {
+        Route::get('/user', function () {
+            return Auth::user();
         });
 
-        Route::middleware('auth:api')->group(function () {
-            Route::get('/user', function () {
-                return Auth::user();
-            });
-
-            // Users
-            Route::resource('users', UserContorller::class)->only([
-                'index']);
-        });
+        // Users
+        Route::resource('users', UserContorller::class)->only([
+            'index'
+        ]);
+    });
 });
 
 // Route::middleware('auth:api')->get('/user', function (Request $request) {
